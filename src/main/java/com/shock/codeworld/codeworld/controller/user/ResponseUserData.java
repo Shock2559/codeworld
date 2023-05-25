@@ -13,8 +13,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseUserData {
+    private int id;
+    private String login;
     private String name;
     private String email;
     private String phone;
     private Date dateBirth;
+    private boolean isValid;
 }

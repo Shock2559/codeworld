@@ -7,10 +7,13 @@ import com.shock.codeworld.codeworld.entity.UserData;
 import com.shock.codeworld.codeworld.repository.UserDataRepository;
 import com.shock.codeworld.codeworld.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,28 +35,39 @@ public class AuthenticationService {
         List<User> userList = userRepository.findListByLogin(request.getLogin());
 
         if(userList.size() > 0) {
-            status = "error: a user with this username already exists";
+
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already exists");
+
         } else {
-            User user = User.builder()
-                    .login(request.getLogin())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.USER)
-                    .build();
 
-            userRepository.save(user);
+            if(request.getLogin() == null || request.getPassword() == null || request.getDateBirth() == null ||
+                    request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
 
-            UserData userData = UserData.builder()
-                    .name(request.getName())
-                    .email(request.getEmail())
-                    .phone(request.getPhone())
-                    .dateBirth(request.getDateBirth())
-                    .user(user)
-                    .build();
+                throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
 
-            userDataRepository.save(userData);
+            } else {
+                User user = User.builder()
+                        .login(request.getLogin())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .role(Role.USER)
+                        .build();
+
+                userRepository.save(user);
+
+                UserData userData = UserData.builder()
+                        .name(request.getName())
+                        .email(request.getEmail())
+                        .phone(request.getPhone())
+                        .dateBirth(request.getDateBirth())
+                        .user(user)
+                        .isValid(false)
+                        .build();
+
+                userDataRepository.save(userData);
 
 
-            token = jwtService.generateToken(user);
+                token = jwtService.generateToken(user);
+            }
         }
 
         return AuthenticationResponse.builder()
@@ -79,7 +93,7 @@ public class AuthenticationService {
         if(user.size() > 0) {
             token = jwtService.generateToken(user.get(0));
         } else {
-            status = "error";
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
         }
 
         return AuthenticationResponse.builder()

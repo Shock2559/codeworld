@@ -34,6 +34,9 @@ public class UserData {
     @Column(name = "date_birth")
     private Date dateBirth;
 
+    @Column(name = "is_valid")
+    private boolean isValid;
+
     @OneToOne()
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "id_user", referencedColumnName = "id")
