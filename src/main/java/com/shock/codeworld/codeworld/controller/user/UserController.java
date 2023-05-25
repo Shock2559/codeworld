@@ -40,5 +40,10 @@ public class UserController {
     }
 
 
+    @CrossOrigin
+    @PostMapping("/update-user")
+    public ResponseUserData updateUser(@RequestBody ResponseUserData request) {
+        return service.updateUser(request);
+    }
 
 }

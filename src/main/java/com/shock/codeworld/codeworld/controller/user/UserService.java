@@ -131,4 +131,20 @@ public class UserService {
 
     }
 
+    public ResponseUserData updateUser(ResponseUserData request) {
+
+        userDataRepository.updateUser(request.getId(), request.getName(), request.getEmail(), request.getPhone(),
+                request.getDateBirth(), request.isValid());
+
+        UserData userdata = userDataRepository.findById(request.getId()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+
+        return ResponseUserData.builder()
+                .name(userdata.getName())
+                .email(userdata.getEmail())
+                .phone(userdata.getPhone())
+                .dateBirth(userdata.getDateBirth())
+                .isValid(userdata.isValid())
+                .build();
+
+    }
 }
