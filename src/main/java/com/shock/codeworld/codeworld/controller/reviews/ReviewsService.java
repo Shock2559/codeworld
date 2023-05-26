@@ -53,10 +53,22 @@ public class ReviewsService {
 
         List<ResponseReviews> response = new ArrayList<>();
 
-//        if(id == null) {
-//
-//        }
+        if(id == null) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
+        }
 
+        List<Reviews> reviews = reviewsRepository.my_getReviewsByIdFarmer(id);
+
+        for(int i = 0; i < reviews.size(); i++) {
+            response.add(ResponseReviews.builder()
+                    .id(reviews.get(i).getId())
+                    .user(reviews.get(i).getUser().getId())
+                    .farmer(reviews.get(i).getFarmer().getId())
+                    .nameFarmer(reviews.get(i).getFarmer().getName())
+                    .reviews(reviews.get(i).getReviews())
+                    .assessment(reviews.get(i).getAssessment())
+                    .build());
+        }
 
 
         return response;

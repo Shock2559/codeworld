@@ -23,7 +23,12 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @GetMapping("/get-all-products")
+    @PostMapping("/update-product")
+    public ResponseProduct updateProduct(@RequestBody ResponseProduct request) {
+        return service.updateProduct(request);
+    }
+    @CrossOrigin
+    @GetMapping("/get-products-by-user-id")
     public List<ResponseProduct> getAllProducts(@RequestParam Integer id) {
         return service.getAllProducts(id);
     }

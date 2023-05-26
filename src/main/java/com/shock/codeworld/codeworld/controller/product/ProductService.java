@@ -64,6 +64,7 @@ public class ProductService {
 
         for (int i = 0; i < products.size(); i++) {
             response.add(ResponseProduct.builder()
+                    .id(products.get(i).getId())
                     .id_user(products.get(i).getUserData().getId())
                     .id_category(products.get(i).getCategoryProduct().getId())
                     .name(products.get(i).getName())
@@ -76,4 +77,35 @@ public class ProductService {
         return response;
 
     }
+    public ResponseProduct updateProduct(ResponseProduct request) {
+
+        if(request.getId() == null || request.getId_category() == 0 || request.getId_user() == 0
+                || request.getName() == null || request.getCost() == null
+                || request.getDescription() == null) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
+        }
+
+        Products products = productsRepository.my_getProductById(request.getId());
+
+        products.setCategoryProduct(categoryProductRepository.my_getCategoryProductById(request.getId_category()));
+        products.setUserData(userDataRepository.my_getUserDataById(request.getId_user()));
+        products.setName(request.getName());
+        products.setDescription(request.getDescription());
+        products.setPhoto(request.getPhoto());
+        products.setCost(request.getCost());
+
+        productsRepository.save(products);
+
+
+        return ResponseProduct.builder()
+                .id(products.getId())
+                .categoryName(products.getCategoryProduct().getName())
+                .name(products.getName())
+                .cost(products.getCost())
+                .description(products.getDescription())
+                .photo(products.getPhoto())
+                .cost(products.getCost())
+                .build();
+    }
+
 }

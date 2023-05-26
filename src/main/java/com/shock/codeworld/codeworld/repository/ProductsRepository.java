@@ -15,4 +15,8 @@ public interface ProductsRepository extends CrudRepository<Products, Integer> {
     @Query("select c from Products c where c.userData.id = :id")
     List<Products> getAllProducts(int id);
 
+
+    @Query("select c from Products c where c.id = :id")
+    Products my_getProductById(Integer id);
+
 }

@@ -51,7 +51,7 @@ public class AuthenticationService {
 
                 Role role = Role.USER;
 
-                if(request.getRole() == "FARMER") {
+                if(request.getRole().equals("FARMER")) {
                     role = Role.FARMER;
                 }
 

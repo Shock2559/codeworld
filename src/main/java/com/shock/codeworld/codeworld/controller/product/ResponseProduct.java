@@ -13,7 +13,7 @@ import java.io.File;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseProduct {
-    private int id;
+    private Integer id;
     private int id_user;
     private int id_category;
     private String categoryName;

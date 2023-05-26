@@ -9,7 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ReviewsRepository extends CrudRepository<Reviews, Integer> {
+
+    @Query("select c from Reviews c where c.farmer.id = :id")
+    List<Reviews> my_getReviewsByIdFarmer(Integer id);
 
 }
