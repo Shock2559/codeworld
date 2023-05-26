@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/reviews")
@@ -18,6 +20,12 @@ public class ReviewsController {
     @PostMapping("/add-reviews")
     public ResponseReviews addReviews(@RequestBody ResponseReviews request){
         return service.addReviews(request);
+    }
+
+    @CrossOrigin
+    @GetMapping("/reviews-by-id")
+    public List<ResponseReviews> getReviewById(@RequestParam Integer id) {
+        return service.getReviewById(id);
     }
 
 }

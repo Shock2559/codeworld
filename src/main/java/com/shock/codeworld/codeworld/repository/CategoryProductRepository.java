@@ -18,4 +18,9 @@ public interface CategoryProductRepository extends CrudRepository<CategoryProduc
 
     @Query("select c from CategoryProduct c where c.id = 2")
     List<CategoryProduct> getDefCategory();
+
+    @Query("select c from CategoryProduct c where c.id = :id")
+    CategoryProduct my_getCategoryProductById(int id);
+
+
 }

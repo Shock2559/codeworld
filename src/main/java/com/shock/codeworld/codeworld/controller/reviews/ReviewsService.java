@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewsService {
@@ -23,9 +26,9 @@ public class ReviewsService {
 
     public ResponseReviews addReviews(ResponseReviews request) {
 
-        UserData userData = userDataRepository.findById(request.getUser()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+        UserData userData = userDataRepository.my_getUserDataById(request.getUser());
 
-        UserData userDataFarmer = userDataRepository.findById(request.getFarmer()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+        UserData userDataFarmer = userDataRepository.my_getUserDataById(request.getFarmer());
 
         Reviews reviews = Reviews.builder()
                 .user(userData)
@@ -45,4 +48,19 @@ public class ReviewsService {
                 .assessment(request.getAssessment())
                 .build();
     }
+
+    public List<ResponseReviews> getReviewById(Integer id) {
+
+        List<ResponseReviews> response = new ArrayList<>();
+
+//        if(id == null) {
+//
+//        }
+
+
+
+        return response;
+
+    }
+
 }

@@ -35,13 +35,14 @@ public class AuthenticationService {
 
         List<User> userList = userRepository.findListByLogin(request.getLogin());
 
+
         if(userList.size() > 0) {
 
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already exists");
 
         } else {
 
-            if(request.getLogin() == null || request.getPassword() == null || request.getRole() == null || request.getAddress() != null ||
+            if(request.getLogin() == null || request.getPassword() == null || request.getRole() == null || request.getAddress() == null ||
                     request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
 
                 throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
@@ -74,11 +75,12 @@ public class AuthenticationService {
 
                 userDataRepository.save(userData);
 
+                System.out.println("test");
+
 
                 token = jwtService.generateToken(user);
             }
         }
-
         return AuthenticationResponse.builder()
                 .token(token)
                 .status(status)
