@@ -38,4 +38,11 @@ public class BasketController {
         return service.createOrder(request);
     }
 
+    @CrossOrigin
+    @PostMapping("/update-basket")
+    public ResponseBasket updateBasket(@RequestBody ResponseBasket request) {
+        return service.updateBasket(request);
+    }
+
+
 }

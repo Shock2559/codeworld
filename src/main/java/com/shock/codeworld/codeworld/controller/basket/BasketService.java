@@ -111,4 +111,28 @@ public class BasketService {
                 .delivery_date(orderBasket.getDelivery_date())
                 .build();
     }
+
+    public ResponseBasket updateBasket(ResponseBasket request) {
+
+        Basket basket = basketRepository.my_getBasketById(request.getId());
+
+        basket.setStatusBasket(allStatusBasketRepository.getStatusBasketById(request.getId_statusBasket()));
+
+        if(request.getId_subscriptionsBasket() != null) {
+            basket.setSubscriptionsBasket(allSubscriptionsBasketRepository.getSubscriptionsBasketById(request.getId_subscriptionsBasket()));
+        }
+
+        basketRepository.save(basket);
+
+
+        return ResponseBasket.builder()
+                .id(basket.getId())
+                .id_user(basket.getUser().getId())
+                .name_user(basket.getUser().getName())
+                .id_subscriptionsBasket(basket.getSubscriptionsBasket().getId())
+                .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
+                .id_statusBasket(basket.getStatusBasket().getId())
+                .name_statusBasket(basket.getStatusBasket().getName())
+                .build();
+    }
 }
