@@ -62,6 +62,7 @@ public class ProductService {
 
         List<ResponseProduct> response = new ArrayList<>();
 
+
         for (int i = 0; i < products.size(); i++) {
             response.add(ResponseProduct.builder()
                     .id(products.get(i).getId())
