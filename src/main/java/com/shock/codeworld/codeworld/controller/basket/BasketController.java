@@ -32,4 +32,10 @@ public class BasketController {
         return service.createBasket(request);
     }
 
+    @CrossOrigin
+    @PostMapping("/create-order")
+    public ResponseOrder createOrder(@RequestBody ResponseOrder request) {
+        return service.createOrder(request);
+    }
+
 }

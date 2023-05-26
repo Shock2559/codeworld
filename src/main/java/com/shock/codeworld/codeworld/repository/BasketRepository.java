@@ -14,4 +14,7 @@ public interface BasketRepository extends CrudRepository<Basket, Integer> {
     @Query("select c from Basket c where c.user.id = :id")
     List<Basket> my_getBasketByIdUser(Integer id);
 
+    @Query("select c from Basket c where c.id = :id")
+    Basket my_getBasketById(Integer id);
+
 }

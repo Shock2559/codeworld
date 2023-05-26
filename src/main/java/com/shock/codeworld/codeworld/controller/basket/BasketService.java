@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class BasketService {
     public final AllStatusBasketRepository allStatusBasketRepository;
     public final AllSubscriptionsBasketRepository allSubscriptionsBasketRepository;
     public final UserDataRepository userDataRepository;
+    public final ProductsRepository productsRepository;
 
     public List<ResponseBasket> getAllBasketByIdUser(Integer id) {
 
@@ -86,6 +88,27 @@ public class BasketService {
                 .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
                 .id_statusBasket(basket.getStatusBasket().getId())
                 .name_statusBasket(basket.getStatusBasket().getName())
+                .build();
+    }
+
+    public ResponseOrder createOrder(ResponseOrder request) {
+
+        OrderBasket orderBasket = OrderBasket.builder()
+                .basket(basketRepository.my_getBasketById(request.getId_basket()))
+                .date_create(new Date())
+                .delivery_date(new Date())
+                .product(productsRepository.my_getProductById(request.getId_product()))
+                .build();
+
+        orderBasketRepository.save(orderBasket);
+
+        return ResponseOrder.builder()
+                .id(orderBasket.getId())
+                .id_basket(orderBasket.getBasket().getId())
+                .id_product(orderBasket.getProduct().getId())
+                .name_product(orderBasket.getProduct().getName())
+                .date_create(orderBasket.getDate_create())
+                .delivery_date(orderBasket.getDelivery_date())
                 .build();
     }
 }
