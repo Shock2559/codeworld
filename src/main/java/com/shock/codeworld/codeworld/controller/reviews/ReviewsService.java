@@ -23,11 +23,9 @@ public class ReviewsService {
 
     public ResponseReviews addReviews(ResponseReviews request) {
 
-        User user = userRepository.findById(request.getUser()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
-        UserData userData = userDataRepository.getUserDataForUser(user);
+        UserData userData = userDataRepository.findById(request.getUser()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
 
-        User farmer = userRepository.findById(request.getFarmer()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
-        UserData userDataFarmer = userDataRepository.getUserDataForUser(farmer);
+        UserData userDataFarmer = userDataRepository.findById(request.getFarmer()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
 
         Reviews reviews = Reviews.builder()
                 .user(userData)
@@ -40,7 +38,11 @@ public class ReviewsService {
 
         return ResponseReviews.builder()
                 .id(request.getId())
-
+                .user(userData.getId())
+                .farmer(userDataFarmer.getId())
+                .nameFarmer(userDataFarmer.getName())
+                .reviews(reviews.getReviews())
+                .assessment(request.getAssessment())
                 .build();
     }
 }
