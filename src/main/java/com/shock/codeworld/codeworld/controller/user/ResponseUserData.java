@@ -1,5 +1,6 @@
 package com.shock.codeworld.codeworld.controller.user;
 
+import com.shock.codeworld.codeworld.entity.Role;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,5 @@ public class ResponseUserData {
     private String address;
     private Date dateRegistration;
     private File photo;
+    private Role role;
 }

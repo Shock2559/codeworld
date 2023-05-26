@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
+import java.io.File;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -38,5 +40,8 @@ public class Products {
 
     @Column(name = "cost")
     private Double cost;
+
+    @Column(name = "photo")
+    private File photo;
 
 }

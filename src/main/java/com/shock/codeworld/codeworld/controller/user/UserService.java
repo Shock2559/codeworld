@@ -42,39 +42,90 @@ public class UserService {
                 .phone(userData.getPhone())
                 .dateRegistration(userData.getDateRegistration())
                 .address(userData.getAddress())
+                .role(userData.getUser().getRole())
                 .build();
     }
 
 
-//    public ResponseUserData updateUser(ResponseUserData request) {
-//
-//        if(request.getLogin() == null || request.getId() == 0 || request.getDateBirth() == null ||
-//                request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
-//
-//            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-//
-//        }
-//
-//        User user = userRepository.findByLogin(request.getLogin()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
-//        UserData userdata = userDataRepository.getUserDataForUser(user);
-//
-//
-//        userdata.setName(request.getName());
-//        userdata.setEmail(request.getEmail());
-//        userdata.setPhone(request.getPhone());
-//        userdata.setDateBirth(request.getDateBirth());
-//
-//        userDataRepository.save(userdata);
-//
-//        return ResponseUserData.builder()
-//                .id(request.getId())
-//                .login(request.getLogin())
-//                .name(userdata.getName())
-//                .email(userdata.getEmail())
-//                .phone(userdata.getPhone())
-//                .dateBirth(userdata.getDateBirth())
-//                .valid(userdata.isValid())
-//                .build();
-//
-//    }
+    public List<ResponseUserData> getUserDataForRole(String role) {
+
+        List<UserData> usersData = new ArrayList<>();
+
+        System.out.println(role);
+
+        if(role == null) {
+            usersData = userDataRepository.getUserDataForAllRole(Role.ADMIN);
+        } else {
+
+            if(role.equals("USER")) {
+                usersData = userDataRepository.getUserDataForRole(Role.USER);
+            }
+
+            if(role.equals("FARMER")) {
+                usersData = userDataRepository.getUserDataForRole(Role.FARMER);
+            }
+
+            if(!role.equals("USER") && !role.equals("FARMER")) {
+                usersData = userDataRepository.getUserDataForAllRole(Role.ADMIN);
+            }
+
+        }
+
+        List<ResponseUserData> response = new ArrayList<>();
+
+        for(int i = 0; i < usersData.size(); i++) {
+            response.add(ResponseUserData.builder()
+                    .id(usersData.get(i).getUser().getId())
+                    .login(usersData.get(i).getUser().getLogin())
+                    .name(usersData.get(i).getName())
+                    .email(usersData.get(i).getEmail())
+                    .phone(usersData.get(i).getPhone())
+                    .dateRegistration(usersData.get(i).getDateRegistration())
+                    .address(usersData.get(i).getAddress())
+                    .photo(usersData.get(i).getPhoto())
+                    .build());
+        }
+
+        return response;
+
+    }
+
+    public ResponseUserData updateUser(ResponseUserData request) {
+
+        if(request.getLogin() == null || request.getRole() == null || request.getAddress() != null ||
+                request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
+
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+
+        }
+
+        User user = userRepository.findByLogin(request.getLogin()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+        UserData userdata = userDataRepository.getUserDataForUser(user);
+
+
+        userdata.setName(request.getName());
+        userdata.setEmail(request.getEmail());
+        userdata.setPhone(request.getPhone());
+        userdata.setAddress(request.getAddress());
+
+        if(request.getPhoto() != null) {
+            userdata.setPhoto(request.getPhoto());
+        }
+
+        userDataRepository.save(userdata);
+
+        return ResponseUserData.builder()
+                .id(request.getId())
+                .login(request.getLogin())
+                .name(userdata.getName())
+                .email(userdata.getEmail())
+                .phone(userdata.getPhone())
+                .dateRegistration(userdata.getDateRegistration())
+                .address(userdata.getAddress())
+                .photo(userdata.getPhoto())
+                .build();
+    }
+
+
 }
+

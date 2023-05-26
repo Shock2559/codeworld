@@ -26,12 +26,18 @@ public class UserController {
         return service.userdata(jwt);
     }
 
+    @CrossOrigin
+    @GetMapping("/get-user-by-role")
+    public List<ResponseUserData> getUserByRole(@RequestParam(required = false) String role) {
+        return service.getUserDataForRole(role);
+    }
 
 
-//    @CrossOrigin
-//    @PostMapping("/update-user")
-//    public ResponseUserData updateUser(@RequestBody ResponseUserData request) {
-//        return service.updateUser(request);
-//    }
+
+    @CrossOrigin
+    @PostMapping("/update-user")
+    public ResponseUserData updateUser(@RequestBody ResponseUserData request) {
+        return service.updateUser(request);
+    }
 
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
+import java.io.File;
 import java.util.Date;
 
 @Data
@@ -41,5 +42,8 @@ public class UserData {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "photo")
+    private File photo;
 
 }

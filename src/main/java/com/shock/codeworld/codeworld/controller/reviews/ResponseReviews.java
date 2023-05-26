@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,8 +13,8 @@ import java.util.Date;
 public class ResponseReviews {
 
     private int id;
-    private UserData user;
-    private UserData farmer;
+    private int user;
+    private int farmer;
     private String reviews;
     private int assessment;
 

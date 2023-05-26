@@ -17,7 +17,6 @@ public class ReviewsController {
     @CrossOrigin
     @PostMapping("/add-reviews")
     public ResponseReviews addReviews(@RequestBody ResponseReviews request){
-
         return service.addReviews(request);
     }
 
