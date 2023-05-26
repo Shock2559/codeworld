@@ -27,7 +27,4 @@ public interface UserDataRepository extends JpaRepository<UserData, Integer> {
     @Query("select c from UserData c where c.id = :id")
     UserData my_getUserDataById(Integer id);
 
-
-
-
 }
