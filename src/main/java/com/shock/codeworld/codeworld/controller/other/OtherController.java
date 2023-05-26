@@ -1,7 +1,6 @@
 package com.shock.codeworld.codeworld.controller.other;
 
 import com.shock.codeworld.codeworld.entity.CategoryProduct;
-import com.shock.codeworld.codeworld.entity.InventoryProduct;
 import com.shock.codeworld.codeworld.repository.CategoryProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -55,6 +54,17 @@ public class OtherController {
         return service.getInventoryByProduct(id);
     }
 
+    @CrossOrigin
+    @GetMapping("/get-all-status-basket")
+    public List<AllStatusBasketResponse> getAllStatusBasket() {
+        return service.getAllStatusBasket();
+    }
+
+    @CrossOrigin
+    @GetMapping("/get-all-subscriptions-basket")
+    public List<AllSubscriptionsBasketResponse> getAllSubscriptionsBasket() {
+        return service.getAllSubscriptionsBasket();
+    }
 
 
 
