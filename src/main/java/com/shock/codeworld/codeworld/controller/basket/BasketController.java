@@ -21,5 +21,10 @@ public class BasketController {
         return service.getAllBasketByIdUser(id);
     }
 
+    @CrossOrigin
+    @GetMapping("/orders-for-basket")
+    public List<ResponseOrder> getOrderForBasket(@RequestParam Integer id) {
+        return service.getAllOrderByIdBasket(id);
+    }
 
 }
