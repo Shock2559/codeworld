@@ -31,15 +31,15 @@ public class UserData {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "date_birth")
-    private Date dateBirth;
-
-    @Column(name = "is_valid")
-    private boolean isValid;
+    @Column(name = "date_registration")
+    private Date dateRegistration;
 
     @OneToOne()
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
+
+    @Column(name = "address")
+    private String address;
 
 }
