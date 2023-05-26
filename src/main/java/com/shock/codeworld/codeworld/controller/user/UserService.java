@@ -41,7 +41,7 @@ public class UserService {
                 .email(userData.getEmail())
                 .phone(userData.getPhone())
                 .dateBirth(userData.getDateBirth())
-                .isValid(userData.isValid())
+                .valid(userData.isValid())
                 .build();
     }
 
@@ -123,7 +123,7 @@ public class UserService {
                     .email(usersData.get(i).getEmail())
                     .phone(usersData.get(i).getPhone())
                     .dateBirth(usersData.get(i).getDateBirth())
-                    .isValid(usersData.get(i).isValid())
+                    .valid(usersData.get(i).isValid())
                     .build());
         }
 
@@ -133,17 +133,32 @@ public class UserService {
 
     public ResponseUserData updateUser(ResponseUserData request) {
 
-        userDataRepository.updateUser(request.getId(), request.getName(), request.getEmail(), request.getPhone(),
-                request.getDateBirth(), request.isValid());
+        if(request.getLogin() == null || request.getId() == 0 || request.getDateBirth() == null ||
+                request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
 
-        UserData userdata = userDataRepository.findById(request.getId()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+
+        }
+
+        User user = userRepository.findByLogin(request.getLogin()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+        UserData userdata = userDataRepository.getUserDataForUser(user);
+
+
+        userdata.setName(request.getName());
+        userdata.setEmail(request.getEmail());
+        userdata.setPhone(request.getPhone());
+        userdata.setDateBirth(request.getDateBirth());
+
+        userDataRepository.save(userdata);
 
         return ResponseUserData.builder()
+                .id(request.getId())
+                .login(request.getLogin())
                 .name(userdata.getName())
                 .email(userdata.getEmail())
                 .phone(userdata.getPhone())
                 .dateBirth(userdata.getDateBirth())
-                .isValid(userdata.isValid())
+                .valid(userdata.isValid())
                 .build();
 
     }

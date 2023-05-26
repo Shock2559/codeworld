@@ -19,5 +19,5 @@ public class ResponseUserData {
     private String email;
     private String phone;
     private Date dateBirth;
-    private boolean isValid;
+    private boolean valid;
 }
