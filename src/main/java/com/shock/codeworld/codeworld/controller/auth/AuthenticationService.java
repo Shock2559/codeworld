@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,16 +41,23 @@ public class AuthenticationService {
 
         } else {
 
-            if(request.getLogin() == null || request.getPassword() == null || request.getDateBirth() == null ||
+            if(request.getLogin() == null || request.getPassword() == null || request.getRole() == null || request.getAddress() != null ||
                     request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
 
                 throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
 
             } else {
+
+                Role role = Role.USER;
+
+                if(request.getRole() == "FARMER") {
+                    role = Role.FARMER;
+                }
+
                 User user = User.builder()
                         .login(request.getLogin())
                         .password(passwordEncoder.encode(request.getPassword()))
-                        .role(Role.USER)
+                        .role(role)
                         .build();
 
                 userRepository.save(user);
@@ -58,9 +66,10 @@ public class AuthenticationService {
                         .name(request.getName())
                         .email(request.getEmail())
                         .phone(request.getPhone())
-                        .dateBirth(request.getDateBirth())
+                        .dateRegistration(new Date())
+                        .address(request.getAddress())
                         .user(user)
-                        .isValid(false)
+                        .phone(request.getPhone())
                         .build();
 
                 userDataRepository.save(userData);

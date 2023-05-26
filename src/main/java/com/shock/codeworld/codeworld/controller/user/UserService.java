@@ -40,126 +40,41 @@ public class UserService {
                 .name(userData.getName())
                 .email(userData.getEmail())
                 .phone(userData.getPhone())
-                .dateBirth(userData.getDateBirth())
-                .valid(userData.isValid())
+                .dateRegistration(userData.getDateRegistration())
+                .address(userData.getAddress())
                 .build();
     }
 
-    public AuthenticationResponse createAdmin(RegisterRequest request) {
-        String status = "ok";
-        String token = "";
 
-        List<User> userList = userRepository.findListByLogin(request.getLogin());
-
-        if(userList.size() > 0) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already exists");
-
-        } else {
-            if(request.getLogin() == null || request.getPassword() == null || request.getDateBirth() == null ||
-                    request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
-
-                throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-            } else {
-                User user = User.builder()
-                        .login(request.getLogin())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .role(Role.ADMIN)
-                        .build();
-
-                userRepository.save(user);
-
-                UserData userData = UserData.builder()
-                        .name(request.getName())
-                        .email(request.getEmail())
-                        .phone(request.getPhone())
-                        .dateBirth(request.getDateBirth())
-                        .user(user)
-                        .isValid(true)
-                        .build();
-
-                userDataRepository.save(userData);
-
-                token = jwtService.generateToken(user);
-            }
-        }
-
-        return AuthenticationResponse.builder()
-                .token(token)
-                .status(status)
-                .build();
-    }
-
-    public List<ResponseUserData> getUserByRole(String role) {
-
-        List<UserData> usersData = new ArrayList<>();
-
-        System.out.println(role);
-
-        if(role == null) {
-            usersData = userDataRepository.getUserDataForAllRole(Role.SUPERUSER);
-        } else {
-
-            if(role.equals("USER")) {
-                usersData = userDataRepository.getUserDataForRole(Role.USER);
-            }
-
-            if(role.equals("ADMIN")) {
-                usersData = userDataRepository.getUserDataForRole(Role.ADMIN);
-            }
-
-            if(!role.equals("USER") && !role.equals("ADMIN")) {
-                usersData = userDataRepository.getUserDataForAllRole(Role.SUPERUSER);
-            }
-
-        }
-
-        List<ResponseUserData> response = new ArrayList<>();
-
-        for(int i = 0; i < usersData.size(); i++) {
-            response.add(ResponseUserData.builder()
-                    .id(usersData.get(i).getUser().getId())
-                    .login(usersData.get(i).getUser().getLogin())
-                    .name(usersData.get(i).getName())
-                    .email(usersData.get(i).getEmail())
-                    .phone(usersData.get(i).getPhone())
-                    .dateBirth(usersData.get(i).getDateBirth())
-                    .valid(usersData.get(i).isValid())
-                    .build());
-        }
-
-        return response;
-
-    }
-
-    public ResponseUserData updateUser(ResponseUserData request) {
-
-        if(request.getLogin() == null || request.getId() == 0 || request.getDateBirth() == null ||
-                request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
-
-            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-
-        }
-
-        User user = userRepository.findByLogin(request.getLogin()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
-        UserData userdata = userDataRepository.getUserDataForUser(user);
-
-
-        userdata.setName(request.getName());
-        userdata.setEmail(request.getEmail());
-        userdata.setPhone(request.getPhone());
-        userdata.setDateBirth(request.getDateBirth());
-
-        userDataRepository.save(userdata);
-
-        return ResponseUserData.builder()
-                .id(request.getId())
-                .login(request.getLogin())
-                .name(userdata.getName())
-                .email(userdata.getEmail())
-                .phone(userdata.getPhone())
-                .dateBirth(userdata.getDateBirth())
-                .valid(userdata.isValid())
-                .build();
-
-    }
+//    public ResponseUserData updateUser(ResponseUserData request) {
+//
+//        if(request.getLogin() == null || request.getId() == 0 || request.getDateBirth() == null ||
+//                request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
+//
+//            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+//
+//        }
+//
+//        User user = userRepository.findByLogin(request.getLogin()).orElseThrow(()->  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data"));
+//        UserData userdata = userDataRepository.getUserDataForUser(user);
+//
+//
+//        userdata.setName(request.getName());
+//        userdata.setEmail(request.getEmail());
+//        userdata.setPhone(request.getPhone());
+//        userdata.setDateBirth(request.getDateBirth());
+//
+//        userDataRepository.save(userdata);
+//
+//        return ResponseUserData.builder()
+//                .id(request.getId())
+//                .login(request.getLogin())
+//                .name(userdata.getName())
+//                .email(userdata.getEmail())
+//                .phone(userdata.getPhone())
+//                .dateBirth(userdata.getDateBirth())
+//                .valid(userdata.isValid())
+//                .build();
+//
+//    }
 }

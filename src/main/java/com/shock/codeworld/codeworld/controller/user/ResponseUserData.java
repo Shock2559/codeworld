@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.util.Date;
 
 @Data
@@ -18,6 +19,7 @@ public class ResponseUserData {
     private String name;
     private String email;
     private String phone;
-    private Date dateBirth;
-    private boolean valid;
+    private String address;
+    private Date dateRegistration;
+    private File photo;
 }

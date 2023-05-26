@@ -26,24 +26,12 @@ public class UserController {
         return service.userdata(jwt);
     }
 
-    @CrossOrigin
-    @PostMapping("/create-admin")
-    public AuthenticationResponse createAdmin(@RequestBody RegisterRequest request) {
-        return service.createAdmin(request);
-    }
 
 
-    @CrossOrigin
-    @GetMapping("/get-user-by-role")
-    public List<ResponseUserData> getUserByRole(@RequestParam(required = false) String role) {
-        return service.getUserByRole(role);
-    }
-
-
-    @CrossOrigin
-    @PostMapping("/update-user")
-    public ResponseUserData updateUser(@RequestBody ResponseUserData request) {
-        return service.updateUser(request);
-    }
+//    @CrossOrigin
+//    @PostMapping("/update-user")
+//    public ResponseUserData updateUser(@RequestBody ResponseUserData request) {
+//        return service.updateUser(request);
+//    }
 
 }
