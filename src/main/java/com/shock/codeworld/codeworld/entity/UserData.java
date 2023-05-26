@@ -49,9 +49,7 @@ public class UserData {
     @Column(name = "discount")
     private int discount;
 
-    @OneToOne()
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    @JoinColumn(name = "id_card", referencedColumnName = "id")
-    private Card card;
+    @Column(name = "card")
+    private String card;
 
 }

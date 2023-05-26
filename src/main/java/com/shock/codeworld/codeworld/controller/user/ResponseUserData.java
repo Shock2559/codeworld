@@ -24,4 +24,6 @@ public class ResponseUserData {
     private Date dateRegistration;
     private File photo;
     private Role role;
+    private Integer discount;
+    private String card;
 }

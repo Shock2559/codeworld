@@ -43,6 +43,8 @@ public class UserService {
                 .dateRegistration(userData.getDateRegistration())
                 .address(userData.getAddress())
                 .role(userData.getUser().getRole())
+                .discount(userData.getDiscount())
+                .card(userData.getCard())
                 .build();
     }
 
@@ -83,6 +85,8 @@ public class UserService {
                     .dateRegistration(usersData.get(i).getDateRegistration())
                     .address(usersData.get(i).getAddress())
                     .photo(usersData.get(i).getPhoto())
+                    .discount(usersData.get(i).getDiscount())
+                    .card(usersData.get(i).getCard())
                     .build());
         }
 
@@ -107,6 +111,8 @@ public class UserService {
         userdata.setEmail(request.getEmail());
         userdata.setPhone(request.getPhone());
         userdata.setAddress(request.getAddress());
+        userdata.setDiscount(request.getDiscount());
+        userdata.setCard(request.getCard());
 
         if(request.getPhoto() != null) {
             userdata.setPhoto(request.getPhoto());
@@ -123,6 +129,8 @@ public class UserService {
                 .dateRegistration(userdata.getDateRegistration())
                 .address(userdata.getAddress())
                 .photo(userdata.getPhoto())
+                .discount(userdata.getDiscount())
+                .card(userdata.getCard())
                 .build();
     }
 
