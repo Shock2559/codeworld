@@ -46,14 +46,16 @@ public class BasketController {
 
     @CrossOrigin
     @GetMapping("/delete-order")
-    public ResponseOrder deleteOrder(@RequestParam Integer id) {
-        return service.deleteOrder(id);
+    public Integer deleteOrder(@RequestParam Integer id) {
+       service.deleteOrder(id);
+        return 1;
     }
 
     @CrossOrigin
     @GetMapping("/delete-basket")
-    public ResponseBasket deleteBasket(@RequestParam Integer id) {
-        return service.deleteBaskit(id);
+    public Integer deleteBasket(@RequestParam Integer id) {
+        service.deleteBaskit(id);
+        return 1;
     }
 
 

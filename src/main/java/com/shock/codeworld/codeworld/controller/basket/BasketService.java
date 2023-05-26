@@ -136,15 +136,13 @@ public class BasketService {
                 .build();
     }
 
-    public ResponseOrder deleteOrder(Integer id) {
+    public void deleteOrder(Integer id) {
 
         OrderBasket orderBasket = orderBasketRepository.my_getOrderById(id);
         orderBasketRepository.delete(orderBasket);
-
-        return ResponseOrder.builder().build();
     }
 
-    public ResponseBasket deleteBaskit(Integer id) {
+    public void deleteBaskit(Integer id) {
 
         List<OrderBasket> list = orderBasketRepository.my_getOrderByIdBasket(id);
 
@@ -154,7 +152,5 @@ public class BasketService {
 
         Basket basket = basketRepository.my_getBasketById(id);
         basketRepository.delete(basket);
-
-        return ResponseBasket.builder().build();
     }
 }

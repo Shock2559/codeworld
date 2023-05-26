@@ -40,8 +40,9 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping("/delete-product")
-    public ResponseProduct deleteProduct(@RequestParam Integer id) {
-        return service.deleteProduct(id);
+    public Integer deleteProduct(@RequestParam Integer id) {
+        service.deleteProduct(id);
+        return 1;
     }
 
 }
