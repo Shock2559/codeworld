@@ -53,6 +53,10 @@ public class ProductService {
 
     public List<ResponseProduct> getAllProducts(Integer id) {
 
+        if(id == null) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
+        }
+
         List<Products> products = new ArrayList<>();
         products = productsRepository.getAllProducts(id);
 
