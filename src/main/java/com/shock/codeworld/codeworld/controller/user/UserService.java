@@ -174,7 +174,7 @@ public class UserService {
                 .build();
     }
 
-    public ResponseUserData updatePhoto(Integer id, File photo) {
+    public ResponseUserData updatePhoto(Integer id, String photo) {
 
         UserData userdata = userDataRepository.my_getUserDataById(id);
 

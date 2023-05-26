@@ -42,6 +42,7 @@ public class Products {
     private Double cost;
 
     @Column(name = "photo")
-    private File photo;
+    //private File photo;
+    private byte[] photo;
 
 }

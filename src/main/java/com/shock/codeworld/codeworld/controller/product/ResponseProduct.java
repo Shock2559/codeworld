@@ -20,6 +20,6 @@ public class ResponseProduct {
     private String name;
     private String description;
     private Double cost;
-    private File photo;
-
+    //private File photo;
+    private byte[] photo;
 }

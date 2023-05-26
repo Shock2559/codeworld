@@ -25,6 +25,7 @@ public class ProductService {
         if(request.getId_category() == 0 || request.getId_user() == 0
         || request.getName() == null || request.getCost() == null
         || request.getDescription() == null) {
+            System.out.println("test");
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
         }
 

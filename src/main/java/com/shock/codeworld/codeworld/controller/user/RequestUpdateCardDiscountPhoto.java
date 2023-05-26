@@ -15,6 +15,7 @@ public class RequestUpdateCardDiscountPhoto {
     private Integer id;
     private String card;
     private Integer discount;
-    private File Photo;
+    //private File Photo;
+    private String Photo;
 
 }

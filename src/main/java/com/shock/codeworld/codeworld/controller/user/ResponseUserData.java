@@ -22,7 +22,7 @@ public class ResponseUserData {
     private String phone;
     private String address;
     private Date dateRegistration;
-    private File photo;
+    private String photo;
     private Role role;
     private Integer discount;
     private String card;
