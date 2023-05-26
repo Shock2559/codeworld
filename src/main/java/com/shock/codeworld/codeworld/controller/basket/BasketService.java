@@ -135,4 +135,26 @@ public class BasketService {
                 .name_statusBasket(basket.getStatusBasket().getName())
                 .build();
     }
+
+    public ResponseOrder deleteOrder(Integer id) {
+
+        OrderBasket orderBasket = orderBasketRepository.my_getOrderById(id);
+        orderBasketRepository.delete(orderBasket);
+
+        return ResponseOrder.builder().build();
+    }
+
+    public ResponseBasket deleteBaskit(Integer id) {
+
+        List<OrderBasket> list = orderBasketRepository.my_getOrderByIdBasket(id);
+
+        for(int i = list.size() - 1; i > -1; i--) {
+            orderBasketRepository.delete(list.get(i));
+        }
+
+        Basket basket = basketRepository.my_getBasketById(id);
+        basketRepository.delete(basket);
+
+        return ResponseBasket.builder().build();
+    }
 }

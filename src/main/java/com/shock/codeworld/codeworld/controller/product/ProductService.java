@@ -134,4 +134,11 @@ public class ProductService {
                 .build();
     }
 
+    public ResponseProduct deleteProduct(Integer id) {
+
+        Products products = productsRepository.my_getProductById(id);
+        productsRepository.delete(products);
+
+        return ResponseProduct.builder().build();
+    }
 }

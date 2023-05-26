@@ -14,4 +14,7 @@ public interface OrderBasketRepository extends CrudRepository<OrderBasket, Integ
     @Query("select c from OrderBasket c where c.basket.id = :id")
     List<OrderBasket> my_getOrderByIdBasket(Integer id);
 
+    @Query("select c from OrderBasket c where c.id = :id")
+    OrderBasket my_getOrderById(Integer id);
+
 }
