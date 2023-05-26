@@ -132,10 +132,6 @@ public class UserService {
 
     public ResponseUserData updateCard(Integer id, String card) {
 
-        if(id == null || card == null) {
-            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-        }
-
         UserData userdata = userDataRepository.my_getUserDataById(id);
 
         userdata.setCard(card);
@@ -157,9 +153,6 @@ public class UserService {
     }
 
     public ResponseUserData updateDiscount(Integer id, Integer discount) {
-        if(id == null || discount == null) {
-            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-        }
 
         UserData userdata = userDataRepository.my_getUserDataById(id);
 
@@ -182,9 +175,6 @@ public class UserService {
     }
 
     public ResponseUserData updatePhoto(Integer id, File photo) {
-        if(id == null || photo == null) {
-            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
-        }
 
         UserData userdata = userDataRepository.my_getUserDataById(id);
 

@@ -67,6 +67,7 @@ public class ProductService {
                     .id(products.get(i).getId())
                     .id_user(products.get(i).getUserData().getId())
                     .id_category(products.get(i).getCategoryProduct().getId())
+                    .categoryName(products.get(i).getCategoryProduct().getName())
                     .name(products.get(i).getName())
                     .description(products.get(i).getDescription())
                     .cost(products.get(i).getCost())
