@@ -43,7 +43,7 @@ public class ReviewsService {
                 .id(request.getId())
                 .user(userData.getId())
                 .farmer(userDataFarmer.getId())
-                .nameFarmer(userDataFarmer.getName())
+                .nameUser(userData.getName())
                 .reviews(reviews.getReviews())
                 .assessment(request.getAssessment())
                 .build();
@@ -64,7 +64,7 @@ public class ReviewsService {
                     .id(reviews.get(i).getId())
                     .user(reviews.get(i).getUser().getId())
                     .farmer(reviews.get(i).getFarmer().getId())
-                    .nameFarmer(reviews.get(i).getFarmer().getName())
+                    .nameUser(reviews.get(i).getUser().getName())
                     .reviews(reviews.get(i).getReviews())
                     .assessment(reviews.get(i).getAssessment())
                     .build());

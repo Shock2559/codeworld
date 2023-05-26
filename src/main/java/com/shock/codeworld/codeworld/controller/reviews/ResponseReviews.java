@@ -15,7 +15,7 @@ public class ResponseReviews {
     private int id;
     private int user;
     private int farmer;
-    private String nameFarmer;
+    private String nameUser;
     private String reviews;
     private int assessment;
 

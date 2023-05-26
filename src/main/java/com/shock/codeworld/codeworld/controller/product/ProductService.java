@@ -52,6 +52,29 @@ public class ProductService {
                 .build();
     }
 
+    public List<ResponseProduct> getAllProducts() {
+        List<Products> products = new ArrayList<>();
+        products = productsRepository.my_getAllProduct();
+
+        List<ResponseProduct> response = new ArrayList<>();
+
+
+        for (int i = 0; i < products.size(); i++) {
+            response.add(ResponseProduct.builder()
+                    .id(products.get(i).getId())
+                    .id_user(products.get(i).getUserData().getId())
+                    .id_category(products.get(i).getCategoryProduct().getId())
+                    .categoryName(products.get(i).getCategoryProduct().getName())
+                    .name(products.get(i).getName())
+                    .description(products.get(i).getDescription())
+                    .cost(products.get(i).getCost())
+                    .photo(products.get(i).getPhoto())
+                    .build());
+        }
+
+        return response;
+    }
+
     public List<ResponseProduct> getAllProducts(Integer id) {
 
         if(id == null) {

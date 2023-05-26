@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -46,6 +48,7 @@ public class UserService {
                 .role(userData.getUser().getRole())
                 .discount(userData.getDiscount())
                 .card(userData.getCard())
+                .photo(userData.getPhoto())
                 .build();
     }
 
