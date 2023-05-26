@@ -25,7 +25,7 @@ public interface UserDataRepository extends JpaRepository<UserData, Integer> {
     List<UserData> getUserDataForAllRole(Role role);
 
     @Query("select c from UserData c where c.id = :id")
-    UserData my_getUserDataById(int id);
+    UserData my_getUserDataById(Integer id);
 
 
 

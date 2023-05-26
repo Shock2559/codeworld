@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class UserService {
         UserData userData = userDataRepository.getUserDataForUser(user);
 
         return ResponseUserData.builder()
-                .id(userData.getUser().getId())
+                .id(userData.getId())
                 .login(login)
                 .name(userData.getName())
                 .email(userData.getEmail())
@@ -96,7 +97,7 @@ public class UserService {
 
     public ResponseUserData updateUser(ResponseUserData request) {
 
-        if(request.getLogin() == null || request.getRole() == null || request.getAddress() != null ||
+        if(request.getLogin() == null || request.getRole() == null || request.getAddress() == null ||
                 request.getEmail() == null || request.getName() == null || request.getPhone() == null) {
 
             throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
@@ -111,18 +112,89 @@ public class UserService {
         userdata.setEmail(request.getEmail());
         userdata.setPhone(request.getPhone());
         userdata.setAddress(request.getAddress());
-        userdata.setDiscount(request.getDiscount());
-        userdata.setCard(request.getCard());
-
-        if(request.getPhoto() != null) {
-            userdata.setPhoto(request.getPhoto());
-        }
 
         userDataRepository.save(userdata);
 
         return ResponseUserData.builder()
-                .id(request.getId())
+                .id(userdata.getId())
                 .login(request.getLogin())
+                .name(userdata.getName())
+                .email(userdata.getEmail())
+                .phone(userdata.getPhone())
+                .dateRegistration(userdata.getDateRegistration())
+                .address(userdata.getAddress())
+                .photo(userdata.getPhoto())
+                .discount(userdata.getDiscount())
+                .card(userdata.getCard())
+                .build();
+    }
+
+
+    public ResponseUserData updateCard(Integer id, String card) {
+
+        if(id == null || card == null) {
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+        }
+
+        UserData userdata = userDataRepository.my_getUserDataById(id);
+
+        userdata.setCard(card);
+
+        userDataRepository.save(userdata);
+
+        return ResponseUserData.builder()
+                .id(userdata.getId())
+                .login(userdata.getUser().getLogin())
+                .name(userdata.getName())
+                .email(userdata.getEmail())
+                .phone(userdata.getPhone())
+                .dateRegistration(userdata.getDateRegistration())
+                .address(userdata.getAddress())
+                .photo(userdata.getPhoto())
+                .discount(userdata.getDiscount())
+                .card(userdata.getCard())
+                .build();
+    }
+
+    public ResponseUserData updateDiscount(Integer id, Integer discount) {
+        if(id == null || discount == null) {
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+        }
+
+        UserData userdata = userDataRepository.my_getUserDataById(id);
+
+        userdata.setDiscount(discount);
+
+        userDataRepository.save(userdata);
+
+        return ResponseUserData.builder()
+                .id(userdata.getId())
+                .login(userdata.getUser().getLogin())
+                .name(userdata.getName())
+                .email(userdata.getEmail())
+                .phone(userdata.getPhone())
+                .dateRegistration(userdata.getDateRegistration())
+                .address(userdata.getAddress())
+                .photo(userdata.getPhoto())
+                .discount(userdata.getDiscount())
+                .card(userdata.getCard())
+                .build();
+    }
+
+    public ResponseUserData updatePhoto(Integer id, File photo) {
+        if(id == null || photo == null) {
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Not found data");
+        }
+
+        UserData userdata = userDataRepository.my_getUserDataById(id);
+
+        userdata.setPhoto(photo);
+
+        userDataRepository.save(userdata);
+
+        return ResponseUserData.builder()
+                .id(userdata.getId())
+                .login(userdata.getUser().getLogin())
                 .name(userdata.getName())
                 .email(userdata.getEmail())
                 .phone(userdata.getPhone())
