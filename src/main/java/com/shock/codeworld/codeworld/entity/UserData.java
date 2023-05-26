@@ -47,7 +47,7 @@ public class UserData {
     private File photo;
 
     @Column(name = "discount")
-    private int discount;
+    private Integer discount;
 
     @Column(name = "card")
     private String card;
