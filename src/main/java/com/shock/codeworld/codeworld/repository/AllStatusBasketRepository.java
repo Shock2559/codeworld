@@ -14,4 +14,7 @@ public interface AllStatusBasketRepository extends CrudRepository<StatusBasket, 
     @Query("select c from StatusBasket c")
     List<StatusBasket> getAllStatusBasket();
 
+    @Query("select c from StatusBasket c where c.id = :id")
+    StatusBasket getStatusBasketById(Integer id);
+
 }

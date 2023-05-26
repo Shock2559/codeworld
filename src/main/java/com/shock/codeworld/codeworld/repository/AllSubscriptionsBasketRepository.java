@@ -14,4 +14,7 @@ public interface AllSubscriptionsBasketRepository extends CrudRepository<Subscri
     @Query("select c from SubscriptionsBasket c")
     List<SubscriptionsBasket> getAllSubscriptionsBasket();
 
+    @Query("select c from SubscriptionsBasket c where c.id = :id")
+    SubscriptionsBasket getSubscriptionsBasketById(Integer id);
+
 }

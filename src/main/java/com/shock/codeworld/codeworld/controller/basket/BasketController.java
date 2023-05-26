@@ -14,7 +14,6 @@ public class BasketController {
 
     private final BasketService service;
 
-
     @CrossOrigin
     @GetMapping("/basket-for-user")
     public List<ResponseBasket> getBasketForUser(@RequestParam Integer id) {
@@ -25,6 +24,12 @@ public class BasketController {
     @GetMapping("/orders-for-basket")
     public List<ResponseOrder> getOrderForBasket(@RequestParam Integer id) {
         return service.getAllOrderByIdBasket(id);
+    }
+
+    @CrossOrigin
+    @PostMapping("/create-basket")
+    public ResponseBasket createBasket(@RequestBody ResponseBasket request) {
+        return service.createBasket(request);
     }
 
 }

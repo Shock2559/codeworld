@@ -2,8 +2,7 @@ package com.shock.codeworld.codeworld.controller.basket;
 
 import com.shock.codeworld.codeworld.entity.Basket;
 import com.shock.codeworld.codeworld.entity.OrderBasket;
-import com.shock.codeworld.codeworld.repository.BasketRepository;
-import com.shock.codeworld.codeworld.repository.OrderBasketRepository;
+import com.shock.codeworld.codeworld.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,9 @@ public class BasketService {
 
     public final BasketRepository basketRepository;
     public final OrderBasketRepository orderBasketRepository;
+    public final AllStatusBasketRepository allStatusBasketRepository;
+    public final AllSubscriptionsBasketRepository allSubscriptionsBasketRepository;
+    public final UserDataRepository userDataRepository;
 
     public List<ResponseBasket> getAllBasketByIdUser(Integer id) {
 
@@ -66,4 +68,24 @@ public class BasketService {
         return response;
     }
 
+    public ResponseBasket createBasket(ResponseBasket request) {
+
+        Basket basket = Basket.builder()
+                .statusBasket(allStatusBasketRepository.getStatusBasketById(request.getId_statusBasket()))
+                .subscriptionsBasket(allSubscriptionsBasketRepository.getSubscriptionsBasketById(request.getId_subscriptionsBasket()))
+                .user(userDataRepository.my_getUserDataById(request.getId_user()))
+                .build();
+
+        basketRepository.save(basket);
+
+        return ResponseBasket.builder()
+                .id(basket.getId())
+                .id_user(basket.getUser().getId())
+                .name_user(basket.getUser().getName())
+                .id_subscriptionsBasket(basket.getSubscriptionsBasket().getId())
+                .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
+                .id_statusBasket(basket.getStatusBasket().getId())
+                .name_statusBasket(basket.getStatusBasket().getName())
+                .build();
+    }
 }
