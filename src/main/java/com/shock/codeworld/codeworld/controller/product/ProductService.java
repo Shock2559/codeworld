@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -48,4 +51,25 @@ public class ProductService {
                 .build();
     }
 
+    public List<ResponseProduct> getAllProducts(Integer id) {
+
+        List<Products> products = new ArrayList<>();
+        products = productsRepository.getAllProducts(id);
+
+        List<ResponseProduct> response = new ArrayList<>();
+
+        for (int i = 0; i < products.size(); i++) {
+            response.add(ResponseProduct.builder()
+                    .id_user(products.get(i).getUserData().getId())
+                    .id_category(products.get(i).getCategoryProduct().getId())
+                    .name(products.get(i).getName())
+                    .description(products.get(i).getDescription())
+                    .cost(products.get(i).getCost())
+                    .photo(products.get(i).getPhoto())
+                    .build());
+        }
+
+        return response;
+
+    }
 }
