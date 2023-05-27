@@ -15,9 +15,33 @@ public class BasketController {
     private final BasketService service;
 
     @CrossOrigin
+    @GetMapping("/all-basket")
+    public List<ResponseBasket> getAllBasket() {
+        return service.getAllBaskets();
+    }
+
+    @CrossOrigin
     @GetMapping("/basket-for-user")
     public List<ResponseBasket> getBasketForUser(@RequestParam Integer id) {
         return service.getAllBasketByIdUser(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/action-basket")
+    public ResponseBasket getActionBasket() {
+        return service.getActionBasket();
+    }
+
+    @CrossOrigin
+    @GetMapping("/get-basket-by-id")
+    public ResponseBasket getBasketById(@RequestParam Integer id) {
+        return service.getBasketById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/close-basket")
+    public ResponseBasket getCloseBasket(@RequestParam Integer id) {
+        return service.closeBasket(id);
     }
 
     @CrossOrigin

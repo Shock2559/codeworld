@@ -15,7 +15,7 @@ import java.io.File;
 public class ResponseProduct {
     private Integer id;
     private int id_user;
-    private int id_category;
+    private Integer id_category;
     private String categoryName;
     private String name;
     private String description;

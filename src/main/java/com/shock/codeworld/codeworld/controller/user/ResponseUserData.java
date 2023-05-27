@@ -26,4 +26,5 @@ public class ResponseUserData {
     private Role role;
     private Integer discount;
     private String card;
+    private Integer id_basket;
 }

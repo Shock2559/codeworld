@@ -28,8 +28,9 @@ public class ProductController {
     }
     @CrossOrigin
     @GetMapping("/get-products-by-user-id")
-    public List<ResponseProduct> getAllProductsById(@RequestParam Integer id) {
-        return service.getAllProducts(id);
+    public List<ResponseProduct> getAllProductsById(@RequestParam Integer id,
+                                                    @RequestParam(required = false) Integer id_category) {
+        return service.getAllProductsById(id, id_category);
     }
 
     @CrossOrigin

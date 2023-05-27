@@ -17,4 +17,7 @@ public interface ReviewsRepository extends CrudRepository<Reviews, Integer> {
     @Query("select c from Reviews c where c.farmer.id = :id")
     List<Reviews> my_getReviewsByIdFarmer(Integer id);
 
+    @Query("select c from Reviews c")
+    List<Reviews> my_getAllReviews();
+
 }

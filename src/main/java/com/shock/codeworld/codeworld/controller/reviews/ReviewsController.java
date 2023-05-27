@@ -28,4 +28,10 @@ public class ReviewsController {
         return service.getReviewById(id);
     }
 
+    @CrossOrigin
+    @GetMapping("/all-reviews")
+    public List<ResponseReviews> getAllReview() {
+        return service.getAllReviews();
+    }
+
 }

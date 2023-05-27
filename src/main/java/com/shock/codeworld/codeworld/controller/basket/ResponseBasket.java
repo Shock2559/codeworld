@@ -24,4 +24,5 @@ public class ResponseBasket {
     private String name_user;
     private String name_statusBasket;
     private String name_subscriptionsBasket;
+    private Double cost;
 }

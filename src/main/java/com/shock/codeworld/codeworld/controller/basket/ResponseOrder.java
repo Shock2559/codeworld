@@ -26,6 +26,7 @@ public class ResponseOrder {
     private String name_product;
     private Date date_create;
     private Date delivery_date;
+    private Double cost;
 
 
 }

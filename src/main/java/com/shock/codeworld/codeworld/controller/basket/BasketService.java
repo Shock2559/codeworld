@@ -33,6 +33,15 @@ public class BasketService {
         List<ResponseBasket> response = new ArrayList<>();
 
         for(int i = 0; i < list.size(); i++) {
+
+            List<OrderBasket> listOrder = orderBasketRepository.my_getOrderByIdBasket(list.get(i).getId());
+
+            double cost = 0;
+
+            for(int j =0 ; j < listOrder.size(); j++) {
+                cost += listOrder.get(j).getProduct().getCost();
+            }
+
             response.add(ResponseBasket.builder()
                     .id(list.get(i).getId())
                     .id_user(list.get(i).getUser().getId())
@@ -41,6 +50,7 @@ public class BasketService {
                     .name_subscriptionsBasket(list.get(i).getSubscriptionsBasket().getName())
                     .id_statusBasket(list.get(i).getStatusBasket().getId())
                     .name_statusBasket(list.get(i).getStatusBasket().getName())
+                    .cost(cost)
                     .build());
         }
 
@@ -64,6 +74,7 @@ public class BasketService {
                     .name_product(list.get(i).getProduct().getName())
                     .date_create(list.get(i).getDate_create())
                     .delivery_date(list.get(i).getDelivery_date())
+                    .cost(list.get(i).getProduct().getCost())
                     .build());
         }
 
@@ -152,5 +163,131 @@ public class BasketService {
 
         Basket basket = basketRepository.my_getBasketById(id);
         basketRepository.delete(basket);
+    }
+
+    public ResponseBasket getActionBasket() {
+
+        ResponseBasket response = ResponseBasket.builder().build();
+
+        List<Basket> list = basketRepository.my_getActiveBasket();
+
+        if(list.size() > 0) {
+            Basket basket = list.get(list.size()-1);
+
+            List<OrderBasket> listOrder = orderBasketRepository.my_getOrderByIdBasket(basket.getId());
+
+            double cost = 0;
+
+            for(int j =0 ; j < listOrder.size(); j++) {
+                cost += listOrder.get(j).getProduct().getCost();
+            }
+
+            response = ResponseBasket.builder()
+                    .id(basket.getId())
+                    .id_user(basket.getUser().getId())
+                    .name_user(basket.getUser().getName())
+                    .id_subscriptionsBasket(basket.getSubscriptionsBasket().getId())
+                    .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
+                    .id_statusBasket(basket.getStatusBasket().getId())
+                    .name_statusBasket(basket.getStatusBasket().getName())
+                    .cost(cost)
+                    .build();
+        }
+
+        return response;
+    }
+
+    public ResponseBasket closeBasket(Integer id) {
+
+        if(id == null) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
+        }
+
+        Basket basket = basketRepository.my_getBasketById(id);
+
+        basket.setStatusBasket(allStatusBasketRepository.getStatusBasketById(2));
+        basketRepository.save(basket);
+
+        List<OrderBasket> listOrder = orderBasketRepository.my_getOrderByIdBasket(basket.getId());
+
+        double cost = 0;
+
+        for(int j =0 ; j < listOrder.size(); j++) {
+            cost += listOrder.get(j).getProduct().getCost();
+        }
+
+        ResponseBasket response = ResponseBasket.builder()
+                .id(basket.getId())
+                .id_user(basket.getUser().getId())
+                .name_user(basket.getUser().getName())
+                .id_subscriptionsBasket(basket.getSubscriptionsBasket().getId())
+                .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
+                .id_statusBasket(basket.getStatusBasket().getId())
+                .name_statusBasket(basket.getStatusBasket().getName())
+                .cost(cost)
+                .build();
+
+
+        return response;
+    }
+
+    public ResponseBasket getBasketById(Integer id) {
+
+        if(id == null) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
+        }
+
+        Basket basket = basketRepository.my_getBasketById(id);
+
+        List<OrderBasket> listOrder = orderBasketRepository.my_getOrderByIdBasket(basket.getId());
+
+        double cost = 0;
+
+        for(int j =0 ; j < listOrder.size(); j++) {
+            cost += listOrder.get(j).getProduct().getCost();
+        }
+
+        ResponseBasket response = ResponseBasket.builder()
+                .id(basket.getId())
+                .id_user(basket.getUser().getId())
+                .name_user(basket.getUser().getName())
+                .id_subscriptionsBasket(basket.getSubscriptionsBasket().getId())
+                .name_subscriptionsBasket(basket.getSubscriptionsBasket().getName())
+                .id_statusBasket(basket.getStatusBasket().getId())
+                .name_statusBasket(basket.getStatusBasket().getName())
+                .cost(cost)
+                .build();
+
+
+        return response;
+    }
+
+    public List<ResponseBasket> getAllBaskets() {
+        List<Basket> list = basketRepository.my_getAllBasket();
+        List<ResponseBasket> response = new ArrayList<>();
+
+        for(int i = 0; i < list.size(); i++) {
+
+            List<OrderBasket> listOrder = orderBasketRepository.my_getOrderByIdBasket(list.get(i).getId());
+
+            double cost = 0;
+
+            for(int j =0 ; j < listOrder.size(); j++) {
+                cost += listOrder.get(j).getProduct().getCost();
+            }
+
+            response.add(ResponseBasket.builder()
+                    .id(list.get(i).getId())
+                    .id_user(list.get(i).getUser().getId())
+                    .name_user(list.get(i).getUser().getName())
+                    .id_subscriptionsBasket(list.get(i).getSubscriptionsBasket().getId())
+                    .name_subscriptionsBasket(list.get(i).getSubscriptionsBasket().getName())
+                    .id_statusBasket(list.get(i).getStatusBasket().getId())
+                    .name_statusBasket(list.get(i).getStatusBasket().getName())
+                    .cost(cost)
+                    .build());
+        }
+
+        return response;
     }
 }

@@ -1,5 +1,6 @@
 package com.shock.codeworld.codeworld.controller.product;
 
+import com.shock.codeworld.codeworld.entity.CategoryProduct;
 import com.shock.codeworld.codeworld.entity.Products;
 import com.shock.codeworld.codeworld.repository.CategoryProductRepository;
 import com.shock.codeworld.codeworld.repository.ProductsRepository;
@@ -75,23 +76,34 @@ public class ProductService {
         return response;
     }
 
-    public List<ResponseProduct> getAllProducts(Integer id) {
+    public List<ResponseProduct> getAllProductsById(Integer id, Integer id_category) {
 
         if(id == null) {
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found data");
         }
 
         List<Products> products = new ArrayList<>();
-        products = productsRepository.getAllProducts(id);
+        List<ResponseProduct> response;
 
-        List<ResponseProduct> response = new ArrayList<>();
+        if(id_category == null) {
+            products = productsRepository.getAllProducts(id);
+
+            response = new ArrayList<>();
+        } else {
+            CategoryProduct category = categoryProductRepository.my_getCategoryProductById(id_category);
+            System.out.println(category);
+            products = productsRepository.my_getAllProductByCategory(id, category);
+
+            response = new ArrayList<>();
+        }
+
 
 
         for (int i = 0; i < products.size(); i++) {
             response.add(ResponseProduct.builder()
                     .id(products.get(i).getId())
                     .id_user(products.get(i).getUserData().getId())
-                    .id_category(products.get(i).getCategoryProduct().getId())
+                    .id_category((products.get(i).getCategoryProduct() == null) ? null : products.get(i).getCategoryProduct().getId())
                     .categoryName(products.get(i).getCategoryProduct().getName())
                     .name(products.get(i).getName())
                     .description(products.get(i).getDescription())

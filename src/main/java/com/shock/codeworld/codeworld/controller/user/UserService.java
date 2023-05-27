@@ -3,6 +3,8 @@ package com.shock.codeworld.codeworld.controller.user;
 import com.shock.codeworld.codeworld.config.JwtService;
 import com.shock.codeworld.codeworld.controller.auth.AuthenticationResponse;
 import com.shock.codeworld.codeworld.controller.auth.RegisterRequest;
+import com.shock.codeworld.codeworld.controller.basket.BasketService;
+import com.shock.codeworld.codeworld.controller.basket.ResponseBasket;
 import com.shock.codeworld.codeworld.entity.Role;
 import com.shock.codeworld.codeworld.entity.User;
 import com.shock.codeworld.codeworld.entity.UserData;
@@ -30,12 +32,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserDataRepository userDataRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BasketService basketService;
 
     public ResponseUserData userdata(String token) {
         String login = jwtService.extractUsername(token);
         User user = userRepository.findListByLogin(login).get(0);
 
         UserData userData = userDataRepository.getUserDataForUser(user);
+
+        ResponseBasket basket = basketService.getActionBasket();
 
         return ResponseUserData.builder()
                 .id(userData.getId())
@@ -49,6 +54,7 @@ public class UserService {
                 .discount(userData.getDiscount())
                 .card(userData.getCard())
                 .photo(userData.getPhoto())
+                .id_basket((basket != null)? basket.getId() : 0)
                 .build();
     }
 

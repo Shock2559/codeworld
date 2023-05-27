@@ -75,4 +75,23 @@ public class ReviewsService {
 
     }
 
+    public List<ResponseReviews> getAllReviews() {
+
+        List<ResponseReviews> response = new ArrayList<>();
+        List<Reviews> reviews = reviewsRepository.my_getAllReviews();
+
+        for(int i = 0; i < reviews.size(); i++) {
+            response.add(ResponseReviews.builder()
+                    .id(reviews.get(i).getId())
+                    .user(reviews.get(i).getUser().getId())
+                    .farmer(reviews.get(i).getFarmer().getId())
+                    .nameUser(reviews.get(i).getUser().getName())
+                    .reviews(reviews.get(i).getReviews())
+                    .assessment(reviews.get(i).getAssessment())
+                    .nameFarmer(reviews.get(i).getFarmer().getName())
+                    .build());
+        }
+
+        return response;
+    }
 }
